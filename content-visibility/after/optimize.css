@@ -1,0 +1,22 @@
+/*
+ * This file is the ONLY difference between /before and /after.
+ *
+ * content-visibility: auto  →  browser skips layout, style, and paint
+ *                               for cards that are off-screen.
+ *
+ * contain-intrinsic-size     →  REQUIRED: tells the browser the estimated
+ *                               size of the skipped content so the scrollbar
+ *                               stays accurate. Without this, the page
+ *                               collapses to near-zero height → CLS.
+ */
+.product-card {
+  content-visibility: auto;
+  contain-intrinsic-size: auto 310px;
+}
+
+/* Fallback for browsers that don't support content-visibility yet */
+@supports not (content-visibility: auto) {
+  .product-card {
+    contain: layout style paint;
+  }
+}

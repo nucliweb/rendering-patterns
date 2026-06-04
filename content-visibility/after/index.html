@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>content-visibility — After · Rendering Patterns</title>
+  <link rel="stylesheet" href="/assets/metrics-overlay.css">
+  <link rel="stylesheet" href="/assets/demo-nav.css">
+  <link rel="stylesheet" href="/content-visibility/catalog.css">
+  <link rel="stylesheet" href="/content-visibility/after/optimize.css">
+</head>
+<body>
+
+  <nav class="demo-nav">
+    <a href="/">Home</a>
+    <span class="sep">/</span>
+    <span>content-visibility</span>
+    <span class="sep">/</span>
+    <span class="current-label after">after</span>
+    <span class="devtools-hint">⚙ DevTools → Performance · CPU ×4</span>
+    <a href="/content-visibility/before/" class="switch-link to-before">
+      ← View before
+    </a>
+  </nav>
+
+  <div class="render-banner">
+    <span class="label">Initial grid render:</span>
+    <span id="render-time">measuring…</span>
+    <span class="label" style="margin-left:auto;font-size:0.68rem">
+      300 cards · <code>content-visibility: auto</code> ✓
+    </span>
+  </div>
+
+  <div class="catalog-header">
+    <h1>Product Catalog</h1>
+    <div class="filter-bar">
+      <button class="filter-btn active" data-filter="all">All</button>
+      <button class="filter-btn" data-filter="electronics">Electronics</button>
+      <button class="filter-btn" data-filter="books">Books</button>
+      <button class="filter-btn" data-filter="clothing">Clothing</button>
+      <button class="filter-btn" data-filter="sports">Sports</button>
+      <button class="filter-btn" data-filter="home">Home &amp; Garden</button>
+      <button class="filter-btn" data-filter="beauty">Beauty</button>
+      <button class="filter-btn" data-filter="toys">Toys</button>
+      <button class="filter-btn" data-filter="food">Food &amp; Drink</button>
+    </div>
+  </div>
+
+  <div id="grid"></div>
+
+  <script src="/assets/metrics-overlay.js"></script>
+  <script src="/content-visibility/catalog.js"></script>
+</body>
+</html>
