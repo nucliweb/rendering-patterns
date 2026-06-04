@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>bfcache — After · Rendering Patterns</title>
+  <link rel="stylesheet" href="/assets/metrics-overlay.css">
+  <link rel="stylesheet" href="/assets/demo-nav.css">
+  <link rel="stylesheet" href="/bfcache/feed.css">
+</head>
+<body>
+
+  <nav class="demo-nav">
+    <a href="/">Home</a>
+    <span class="sep">/</span>
+    <span>bfcache</span>
+    <span class="sep">/</span>
+    <span class="current-label after">after</span>
+    <span class="devtools-hint">⚙ DevTools → Application → Back/forward cache</span>
+    <a href="/bfcache/before/" class="switch-link to-before">← View before</a>
+  </nav>
+
+  <header class="feed-header">
+    <h1>Dev Feed</h1>
+    <p>Scroll down, open an article, then press ← Back</p>
+  </header>
+
+  <div class="feed-hint" style="background:#1a2e1a;border-color:#2a5a2a;color:#88cc88">
+    <strong style="color:#aaeaaa">What's fixed:</strong> no <code>unload</code> listener.
+    The browser can safely snapshot this page. Press ← Back from any article and the feed
+    <strong>restores instantly</strong> — exact scroll position, no reload, no flash.
+    Watch the <strong>"✓ Restored from bfcache"</strong> badge appear in the overlay.
+  </div>
+
+  <ul class="feed-list" id="feed"></ul>
+
+  <script src="/assets/metrics-overlay.js"></script>
+  <script src="/bfcache/feed-data.js"></script>
+  <script>
+    // ✓ No unload listener — bfcache works.
+    // Use pageshow to react to bfcache restores without breaking the cache.
+    window.addEventListener('pageshow', (event) => {
+      if (event.persisted) {
+        // Page was restored from bfcache. Refresh only stale data if needed.
+        // The metrics overlay already handles the bfcache badge.
+      }
+    });
+
+    const feed = document.getElementById('feed');
+    window.FEED_DATA.forEach(article => {
+      const li = document.createElement('li');
+      li.className = 'feed-item';
+      li.innerHTML = `
+        <a href="/bfcache/after/article.html?id=${article.id}">
+          <span class="item-category">${article.categoryLabel}</span>
+          <span class="item-title">${article.title}</span>
+          <span class="item-meta">
+            <span>${article.author}</span>
+            <span>${article.date}</span>
+            <span>${article.readTime} min read</span>
+          </span>
+          <span class="item-thumbnail" style="background:linear-gradient(135deg,#1a1a2e,#2a1a3a);color:${article.categoryColor}">
+            ${article.emoji}
+          </span>
+        </a>
+      `;
+      feed.appendChild(li);
+    });
+  </script>
+</body>
+</html>

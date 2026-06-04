@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>bfcache — Before · Rendering Patterns</title>
+  <link rel="stylesheet" href="/assets/metrics-overlay.css">
+  <link rel="stylesheet" href="/assets/demo-nav.css">
+  <link rel="stylesheet" href="/bfcache/feed.css">
+</head>
+<body>
+
+  <nav class="demo-nav">
+    <a href="/">Home</a>
+    <span class="sep">/</span>
+    <span>bfcache</span>
+    <span class="sep">/</span>
+    <span class="current-label before">before</span>
+    <span class="devtools-hint">⚙ DevTools → Application → Back/forward cache</span>
+    <a href="/bfcache/after/" class="switch-link to-after">View after →</a>
+  </nav>
+
+  <header class="feed-header">
+    <h1>Dev Feed</h1>
+    <p>Scroll down, open an article, then press ← Back</p>
+  </header>
+
+  <div class="feed-hint">
+    <strong>What's broken:</strong> this page registers a <code>window.unload</code> listener —
+    the most common bfcache killer in SPAs. Press ← Back from any article and watch the page
+    <strong>reload from scratch</strong>: flash of white, scroll position lost, metrics reset.
+  </div>
+
+  <ul class="feed-list" id="feed"></ul>
+
+  <script src="/assets/metrics-overlay.js"></script>
+  <script src="/bfcache/feed-data.js"></script>
+  <script>
+    // ⚠ This is the bfcache killer.
+    // A common SPA pattern for analytics or cleanup — it silently disables bfcache
+    // in all major browsers. The browser cannot safely snapshot a page with unload listeners.
+    window.addEventListener('unload', () => {
+      // "cleanup" that prevents bfcache
+    });
+
+    const feed = document.getElementById('feed');
+    window.FEED_DATA.forEach(article => {
+      const li = document.createElement('li');
+      li.className = 'feed-item';
+      li.innerHTML = `
+        <a href="/bfcache/before/article.html?id=${article.id}">
+          <span class="item-category">${article.categoryLabel}</span>
+          <span class="item-title">${article.title}</span>
+          <span class="item-meta">
+            <span>${article.author}</span>
+            <span>${article.date}</span>
+            <span>${article.readTime} min read</span>
+          </span>
+          <span class="item-thumbnail" style="background:linear-gradient(135deg,#1a1a2e,#2a1a3a);color:${article.categoryColor}">
+            ${article.emoji}
+          </span>
+        </a>
+      `;
+      feed.appendChild(li);
+    });
+  </script>
+</body>
+</html>

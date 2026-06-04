@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Article · bfcache After · Rendering Patterns</title>
+  <link rel="stylesheet" href="/assets/metrics-overlay.css">
+  <link rel="stylesheet" href="/assets/demo-nav.css">
+  <link rel="stylesheet" href="/bfcache/feed.css">
+</head>
+<body>
+
+  <nav class="demo-nav">
+    <a href="/">Home</a>
+    <span class="sep">/</span>
+    <span>bfcache</span>
+    <span class="sep">/</span>
+    <span class="current-label after">after</span>
+    <span class="devtools-hint">⚙ Press ← Back — the feed restores instantly</span>
+    <a href="/bfcache/before/" class="switch-link to-before">← View before</a>
+  </nav>
+
+  <div class="article-container">
+    <a href="/bfcache/after/" class="article-back">← Back to feed</a>
+    <div id="article-content"></div>
+  </div>
+
+  <script src="/assets/metrics-overlay.js"></script>
+  <script src="/bfcache/feed-data.js"></script>
+  <script>
+    const id = parseInt(new URLSearchParams(location.search).get('id')) || 1;
+    const article = window.FEED_DATA.find(a => a.id === id) || window.FEED_DATA[0];
+
+    const body = `
+      <p>The browser rendering pipeline has always been the real constraint, yet most
+      performance conversations focus on JavaScript bundle sizes or server response times.
+      Understanding the pipeline — parse, style, layout, paint, composite — is the key
+      to diagnosing performance issues that no framework switch will fix.</p>
+
+      <h2>The Problem</h2>
+      <p>When a user navigates back to a previous page, the browser has two options:
+      reload the page from the network (or cache), or restore a snapshot of the page
+      that was saved before navigation. The second option — the Back/Forward Cache —
+      is dramatically faster. But most SPAs accidentally disable it.</p>
+
+      <p>The <code>unload</code> event listener is the primary culprit. Registering
+      an unload listener signals to the browser that the page might do cleanup work
+      on exit, making it unsafe to snapshot. The result: full reload on every back
+      navigation. TTFB, parse, execute, hydrate — all over again.</p>
+
+      <h2>The Fix</h2>
+      <p>Remove the <code>unload</code> listener. Use <code>pagehide</code> with
+      <code>event.persisted</code> to detect whether the page is entering bfcache.
+      Use <code>pageshow</code> to refresh only the data that might have changed —
+      not the entire page.</p>
+
+      <p>The result is a navigation that feels instant. No network request. No
+      re-execution of JavaScript. The scroll position, form state, and the entire
+      JavaScript heap are preserved exactly as they were. Watch the overlay on the
+      previous page — it shows <strong>"✓ Restored from bfcache"</strong> when
+      the page comes back from cache.</p>
+    `;
+
+    document.getElementById('article-content').innerHTML = `
+      <p class="article-category">${article.categoryLabel}</p>
+      <h1 class="article-title">${article.title}</h1>
+      <div class="article-meta">
+        <span>${article.author}</span>
+        <span>${article.date}</span>
+        <span>${article.readTime} min read</span>
+      </div>
+      <div class="article-hero" style="color:${article.categoryColor}">
+        ${article.emoji}
+      </div>
+      <div class="article-body">${body}</div>
+    `;
+
+    document.title = article.title + ' · Rendering Patterns';
+  </script>
+</body>
+</html>
