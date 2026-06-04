@@ -1,0 +1,13 @@
+{
+  "headers": [
+    {
+      "source": "/bfcache/before/(.*)",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "no-store"
+        }
+      ]
+    }
+  ]
+}
