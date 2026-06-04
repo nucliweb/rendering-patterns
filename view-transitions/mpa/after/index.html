@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>View Transitions MPA — After · Rendering Patterns</title>
+  <link rel="stylesheet" href="/assets/metrics-overlay.css">
+  <link rel="stylesheet" href="/assets/demo-nav.css">
+  <link rel="stylesheet" href="/view-transitions/shop.css">
+  <style>
+    /* Line 1: opt this page into navigation-triggered view transitions */
+    @view-transition { navigation: auto; }
+
+    /* Tune timing — applies to every named group (shared elements + root) */
+    ::view-transition-group(*) {
+      animation-timing-function: cubic-bezier(0.25, 0, 0, 1);
+      animation-duration: 420ms;
+    }
+
+    ::view-transition-old(root),
+    ::view-transition-new(root) {
+      animation-duration: 180ms;
+    }
+  </style>
+</head>
+<body>
+
+  <nav class="demo-nav">
+    <a href="/">Home</a>
+    <span class="sep">/</span>
+    <span>View Transitions MPA</span>
+    <span class="sep">/</span>
+    <span class="current-label after">after</span>
+    <span class="devtools-hint">⚙ DevTools → Elements — inspect view-transition-name</span>
+    <a href="/view-transitions/mpa/before/" class="switch-link to-before">← View before</a>
+  </nav>
+
+  <div class="demo-hint" style="background:#1a2e1a;border:1px solid #2a5a2a;color:#88cc88;font-size:0.8rem;padding:0.6rem 1rem;margin:0;line-height:1.5">
+    <strong style="color:#aaeaaa">What's new:</strong>
+    Two CSS rules: <code>@view-transition { navigation: auto }</code> opts the page in.
+    <code>view-transition-name: product-{id}</code> on the thumbnail tells the browser
+    which element is the hero — it does the rest. No JavaScript added.
+  </div>
+
+  <div id="app"></div>
+
+  <script src="/assets/metrics-overlay.js"></script>
+  <script src="/view-transitions/products.js"></script>
+  <script>
+    const app = document.getElementById('app');
+
+    function badgeHtml(badge) {
+      if (!badge) return '';
+      return `<div class="product-badge badge-${badge.toLowerCase().replace(' ', '-')}">${badge}</div>`;
+    }
+
+    app.innerHTML = `
+      <div class="shop-header">
+        <h1>Tech Shop</h1>
+        <p>Click any product — the thumbnail flies to the detail hero</p>
+      </div>
+      <div class="product-grid">
+        ${PRODUCTS.map(p => `
+          <a class="product-card" href="/view-transitions/mpa/after/product?id=${p.id}">
+            <div class="product-thumb"
+                 style="background: linear-gradient(135deg, ${p.dark}, ${p.color}); view-transition-name: product-${p.id};">
+              <span class="product-thumb-emoji">${p.emoji}</span>
+            </div>
+            <div class="product-card-body">
+              ${badgeHtml(p.badge)}
+              <div class="product-name">${p.name}</div>
+              <div class="product-price">$${p.price.toFixed(2)}</div>
+            </div>
+          </a>
+        `).join('')}
+      </div>
+    `;
+  </script>
+</body>
+</html>

@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Product — View Transitions MPA After · Rendering Patterns</title>
+  <link rel="stylesheet" href="/assets/metrics-overlay.css">
+  <link rel="stylesheet" href="/assets/demo-nav.css">
+  <link rel="stylesheet" href="/view-transitions/shop.css">
+  <style>
+    /* Same two rules as index.html — both pages must opt in */
+    @view-transition { navigation: auto; }
+
+    ::view-transition-group(*) {
+      animation-timing-function: cubic-bezier(0.25, 0, 0, 1);
+      animation-duration: 420ms;
+    }
+
+    ::view-transition-old(root),
+    ::view-transition-new(root) {
+      animation-duration: 180ms;
+    }
+  </style>
+</head>
+<body>
+
+  <nav class="demo-nav">
+    <a href="/">Home</a>
+    <span class="sep">/</span>
+    <span>View Transitions MPA</span>
+    <span class="sep">/</span>
+    <span class="current-label after">after</span>
+    <span class="devtools-hint">← Back also animates — shared element works both ways</span>
+    <a href="/view-transitions/mpa/before/" class="switch-link to-before">← View before</a>
+  </nav>
+
+  <div id="app"></div>
+
+  <script src="/assets/metrics-overlay.js"></script>
+  <script src="/view-transitions/products.js"></script>
+  <script>
+    const app = document.getElementById('app');
+
+    const params = new URLSearchParams(location.search);
+    const id = Number(params.get('id'));
+    const product = PRODUCTS.find(p => p.id === id);
+
+    if (!product) {
+      app.innerHTML = '<div style="padding:2rem;color:#888">Product not found. <a href="/view-transitions/mpa/after/">← Back</a></div>';
+    } else {
+      document.title = `${product.name} — MPA After`;
+
+      function badgeHtml(badge) {
+        if (!badge) return '';
+        return `<div class="product-badge badge-${badge.toLowerCase().replace(' ', '-')}">${badge}</div>`;
+      }
+
+      // The view-transition-name here must match the one on the card in index.html.
+      // Browser sees product-{id} on both sides and morphs position + size automatically.
+      app.innerHTML = `
+        <div class="shop-detail">
+          <a class="detail-back" href="/view-transitions/mpa/after">← Back to shop</a>
+          <div class="detail-layout">
+            <div class="product-thumb"
+                 style="background: linear-gradient(135deg, ${product.dark}, ${product.color}); view-transition-name: product-${product.id};">
+              <span class="product-thumb-emoji">${product.emoji}</span>
+            </div>
+            <div class="detail-info">
+              ${badgeHtml(product.badge)}
+              <h1 class="detail-name">${product.name}</h1>
+              <p class="detail-price">$${product.price.toFixed(2)}</p>
+              <p class="detail-desc">${product.desc}</p>
+              <button class="detail-btn">Add to cart</button>
+            </div>
+          </div>
+        </div>
+      `;
+    }
+  </script>
+</body>
+</html>
