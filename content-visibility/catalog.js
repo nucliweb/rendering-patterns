@@ -117,12 +117,16 @@ function initCatalog() {
   const fragment = document.createDocumentFragment();
   products.forEach(p => fragment.appendChild(renderCard(p)));
   grid.appendChild(fragment);
-  const renderMs = Math.round(performance.now() - t0);
 
-  if (renderTimeEl) {
-    renderTimeEl.textContent = `Grid rendered in ${renderMs} ms`;
-    renderTimeEl.classList.add(renderMs < 30 ? 'fast' : renderMs < 100 ? 'ok' : 'slow');
-  }
+  // Double-rAF: waits for the browser to finish layout + paint before measuring.
+  // A single rAF fires before paint; the second fires after the frame is committed.
+  requestAnimationFrame(() => requestAnimationFrame(() => {
+    const renderMs = Math.round(performance.now() - t0);
+    if (renderTimeEl) {
+      renderTimeEl.textContent = `Grid rendered in ${renderMs} ms`;
+      renderTimeEl.classList.add(renderMs < 50 ? 'fast' : renderMs < 150 ? 'ok' : 'slow');
+    }
+  }));
 
   const cards = Array.from(grid.querySelectorAll('.product-card'));
 
