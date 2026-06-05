@@ -112,3 +112,55 @@
   color: #52c07a;
   border: 1px solid #2a5a3a;
 }
+
+/* ─── Light theme ────────────────────────────────────────────── */
+@media (prefers-color-scheme: light) {
+  :root:not([data-theme="dark"]) #metrics-overlay {
+    background: rgba(255, 255, 255, 0.96);
+    border-color: #e2e2e2;
+    color: #111111;
+    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.12);
+  }
+
+  :root:not([data-theme="dark"]) #metrics-overlay-header {
+    border-bottom-color: #e2e2e2;
+  }
+
+  :root:not([data-theme="dark"]) #metrics-overlay-title { color: #999; }
+  :root:not([data-theme="dark"]) #metrics-toggle-btn {
+    border-color: #ddd;
+    color: #999;
+  }
+  :root:not([data-theme="dark"]) #metrics-toggle-btn:hover { color: #555; border-color: #bbb; }
+
+  :root:not([data-theme="dark"]) .metric-label { color: #999; }
+  :root:not([data-theme="dark"]) .metric-value.pending { color: #bbb; }
+
+  :root:not([data-theme="dark"]) .metric-bar { background: #e8e8e8; }
+  :root:not([data-theme="dark"]) .metric-bar-fill { background: #bbb; }
+
+  :root:not([data-theme="dark"]) #metrics-overlay-divider { border-top-color: #e8e8e8; }
+
+  :root:not([data-theme="dark"]) .metric-badge.bfcache {
+    background: #e8f5ee;
+    border-color: #b8e5c8;
+  }
+}
+
+html[data-theme="light"] #metrics-overlay {
+  background: rgba(255, 255, 255, 0.96);
+  border-color: #e2e2e2;
+  color: #111111;
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.12);
+}
+
+html[data-theme="light"] #metrics-overlay-header { border-bottom-color: #e2e2e2; }
+html[data-theme="light"] #metrics-overlay-title { color: #999; }
+html[data-theme="light"] #metrics-toggle-btn { border-color: #ddd; color: #999; }
+html[data-theme="light"] #metrics-toggle-btn:hover { color: #555; border-color: #bbb; }
+html[data-theme="light"] .metric-label { color: #999; }
+html[data-theme="light"] .metric-value.pending { color: #bbb; }
+html[data-theme="light"] .metric-bar { background: #e8e8e8; }
+html[data-theme="light"] .metric-bar-fill { background: #bbb; }
+html[data-theme="light"] #metrics-overlay-divider { border-top-color: #e8e8e8; }
+html[data-theme="light"] .metric-badge.bfcache { background: #e8f5ee; border-color: #b8e5c8; }

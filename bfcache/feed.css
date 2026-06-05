@@ -185,3 +185,54 @@ body {
   margin: 2rem 0 0.75rem;
   color: var(--text);
 }
+
+/* ─── Light theme ────────────────────────────────────────────── */
+@media (prefers-color-scheme: light) {
+  :root:not([data-theme="dark"]) {
+    --bg: #f8f8f8;
+    --surface: #ffffff;
+    --border: #e2e2e2;
+    --text: #111111;
+    --muted: #777777;
+    --accent: #6c5ce7;
+  }
+
+  :root:not([data-theme="dark"]) .feed-item:hover { background: #f5f5f5; }
+
+  :root:not([data-theme="dark"]) .feed-hint {
+    background: #eeeefc;
+    border-color: #c8c8ee;
+    color: #6666aa;
+  }
+  :root:not([data-theme="dark"]) .feed-hint strong { color: #5555cc; }
+
+  :root:not([data-theme="dark"]) .article-hero {
+    background: linear-gradient(135deg, #e0e0ff, #f0e0ff);
+  }
+
+  :root:not([data-theme="dark"]) .article-body p { color: #444; }
+}
+
+:root[data-theme="light"] {
+  --bg: #f8f8f8;
+  --surface: #ffffff;
+  --border: #e2e2e2;
+  --text: #111111;
+  --muted: #777777;
+  --accent: #6c5ce7;
+}
+
+html[data-theme="light"] .feed-item:hover { background: #f5f5f5; }
+
+html[data-theme="light"] .feed-hint {
+  background: #eeeefc;
+  border-color: #c8c8ee;
+  color: #6666aa;
+}
+html[data-theme="light"] .feed-hint strong { color: #5555cc; }
+
+html[data-theme="light"] .article-hero {
+  background: linear-gradient(135deg, #e0e0ff, #f0e0ff);
+}
+
+html[data-theme="light"] .article-body p { color: #444; }

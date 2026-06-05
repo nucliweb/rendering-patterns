@@ -7,6 +7,7 @@
   <link rel="stylesheet" href="/assets/metrics-overlay.css">
   <link rel="stylesheet" href="/assets/demo-nav.css">
   <link rel="stylesheet" href="/view-transitions/shop.css">
+  <script src="/assets/theme.js"></script>
 </head>
 <body>
 
@@ -18,10 +19,11 @@
     <span class="current-label before">before</span>
     <span class="devtools-hint">Watch the jarring instant swap on click</span>
     <a href="/view-transitions/spa/after/" class="switch-link to-after">View after →</a>
+    <button id="theme-toggle" title="Toggle theme">☀</button>
   </nav>
 
-  <div class="demo-hint" style="background:#2a1a1a;border:1px solid #5a2a2a;color:#e8a0a0;font-size:0.8rem;padding:0.6rem 1rem;margin:0;line-height:1.5">
-    <strong style="color:#e05252">What's missing:</strong>
+  <div class="demo-hint-before">
+    <strong>What's missing:</strong>
     Clicking a product causes an abrupt instant swap — no visual continuity.
     The eye loses context on every navigation.
     <code>document.startViewTransition()</code> is nowhere in sight.

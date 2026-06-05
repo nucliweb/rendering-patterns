@@ -25,6 +25,10 @@ body {
 header {
   padding: 3rem 2rem 2rem;
   border-bottom: 1px solid var(--border);
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 1rem;
 }
 
 header h1 {
@@ -123,3 +127,51 @@ footer {
 
 footer a { color: var(--accent); text-decoration: none; }
 footer a:hover { text-decoration: underline; }
+
+/* ─── Theme toggle button ────────────────────────────────────── */
+#theme-toggle {
+  background: none;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--muted);
+  font-size: 1rem;
+  line-height: 1;
+  padding: 0.35rem 0.6rem;
+  cursor: pointer;
+  transition: color 0.15s, border-color 0.15s;
+}
+
+#theme-toggle:hover { color: var(--text); border-color: var(--muted); }
+
+/* ─── Light theme ────────────────────────────────────────────── */
+@media (prefers-color-scheme: light) {
+  :root:not([data-theme="dark"]) {
+    --bg: #f8f8f8;
+    --surface: #ffffff;
+    --border: #e2e2e2;
+    --text: #111111;
+    --muted: #777777;
+    --accent: #6c5ce7;
+    --before: #c94040;
+    --after: #389a5e;
+  }
+
+  :root:not([data-theme="dark"]) .demo-card:hover { background: #f0f0f0; }
+  :root:not([data-theme="dark"]) .btn-before { background: #fde8e8; border-color: #f5b8b8; }
+  :root:not([data-theme="dark"]) .btn-after  { background: #e8f5ee; border-color: #b8e5c8; }
+}
+
+:root[data-theme="light"] {
+  --bg: #f8f8f8;
+  --surface: #ffffff;
+  --border: #e2e2e2;
+  --text: #111111;
+  --muted: #777777;
+  --accent: #6c5ce7;
+  --before: #c94040;
+  --after: #389a5e;
+}
+
+html[data-theme="light"] .demo-card:hover { background: #f0f0f0; }
+html[data-theme="light"] .btn-before { background: #fde8e8; border-color: #f5b8b8; }
+html[data-theme="light"] .btn-after  { background: #e8f5ee; border-color: #b8e5c8; }
