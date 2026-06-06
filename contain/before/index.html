@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CSS Containment — Before · Rendering Patterns</title>
+  <link rel="stylesheet" href="/assets/metrics-overlay.css">
+  <link rel="stylesheet" href="/assets/demo-nav.css">
+  <link rel="stylesheet" href="/contain/kanban.css">
+  <script src="/assets/theme.js"></script>
+</head>
+<body>
+
+  <nav class="demo-nav">
+    <a href="/">Home</a>
+    <span class="sep">/</span>
+    <span>CSS Containment</span>
+    <span class="sep">/</span>
+    <span class="current-label before">before</span>
+    <span class="devtools-hint">⚙ DevTools → Performance · CPU ×4</span>
+    <a href="/contain/after/" class="switch-link to-after">View after →</a>
+    <button id="theme-toggle" title="Toggle theme">☀</button>
+  </nav>
+
+  <div class="board-banner">
+    <span>Containment:</span>
+    <span class="badge badge-before">none — reflow scope: full board</span>
+    <span style="margin-left:0.5rem">·</span>
+    <span>Last reflow:</span>
+    <span id="reflow-time" class="reflow-time">—</span>
+    <span style="margin-left:0.5rem">·</span>
+    <span>Long tasks:</span>
+    <span id="long-tasks">0</span>
+    <span class="hint">100 cards · edit any title</span>
+  </div>
+
+  <div id="kanban-board" class="kanban-board"></div>
+
+  <script src="/assets/metrics-overlay.js"></script>
+  <script src="/contain/kanban.js"></script>
+</body>
+</html>

@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Product — Speculation Rules After · Rendering Patterns</title>
+  <link rel="stylesheet" href="/assets/metrics-overlay.css">
+  <link rel="stylesheet" href="/assets/demo-nav.css">
+  <link rel="stylesheet" href="/view-transitions/shop.css">
+  <script src="/assets/theme.js"></script>
+</head>
+<body>
+
+  <nav class="demo-nav">
+    <a href="/">Home</a>
+    <span class="sep">/</span>
+    <span>Speculation Rules</span>
+    <span class="sep">/</span>
+    <span class="current-label after">after</span>
+    <span class="devtools-hint">⚙ DevTools → Application → Speculation Rules</span>
+    <a href="/speculation-rules/before/" class="switch-link to-before">← View before</a>
+    <button id="theme-toggle" title="Toggle theme">☀</button>
+  </nav>
+
+  <div id="app"></div>
+
+  <script src="/assets/metrics-overlay.js"></script>
+  <script src="/view-transitions/products.js"></script>
+  <script>
+    const app = document.getElementById('app');
+
+    const params = new URLSearchParams(location.search);
+    const id = Number(params.get('id'));
+    const product = PRODUCTS.find(p => p.id === id);
+
+    if (!product) {
+      app.innerHTML = '<div style="padding:2rem;color:#888">Product not found. <a href="/speculation-rules/after/">← Back</a></div>';
+    } else {
+      document.title = `${product.name} — Speculation Rules After`;
+
+      function badgeHtml(badge) {
+        if (!badge) return '';
+        return `<div class="product-badge badge-${badge.toLowerCase().replace(' ', '-')}">${badge}</div>`;
+      }
+
+      app.innerHTML = `
+        <div class="shop-detail">
+          <a class="detail-back" href="/speculation-rules/after/">← Back to shop</a>
+          <div class="detail-layout">
+            <div class="product-thumb"
+                 style="background: linear-gradient(135deg, ${product.dark}, ${product.color})">
+              <span class="product-thumb-emoji">${product.emoji}</span>
+            </div>
+            <div class="detail-info">
+              ${badgeHtml(product.badge)}
+              <h1 class="detail-name">${product.name}</h1>
+              <p class="detail-price">$${product.price.toFixed(2)}</p>
+              <p class="detail-desc">${product.desc}</p>
+              <button class="detail-btn">Add to cart</button>
+            </div>
+          </div>
+        </div>
+      `;
+    }
+  </script>
+
+  <script>
+    // Show a badge if this page was activated from a prerender.
+    // activationStart > 0 means the page was fully loaded in the background
+    // before the user clicked — the navigation from their perspective was instant.
+    window.addEventListener('load', () => {
+      const nav = performance.getEntriesByType('navigation')[0];
+      if (!nav || nav.activationStart <= 0) return;
+      const overlay = document.getElementById('metrics-overlay');
+      if (!overlay) return;
+      const row = document.createElement('div');
+      row.style.cssText = 'margin-top:0.4rem';
+      row.innerHTML = `<span style="
+        display:inline-block;
+        background:#1a2a4a;
+        border:1px solid #2a5a8a;
+        color:#7ac8f7;
+        font-size:0.65rem;
+        font-weight:700;
+        letter-spacing:0.05em;
+        padding:0.2rem 0.6rem;
+        border-radius:4px;
+        text-transform:uppercase;
+        font-family:ui-monospace,'Cascadia Code',monospace;
+      ">⚡ Prerendered page</span>`;
+      overlay.appendChild(row);
+    });
+  </script>
+</body>
+</html>
