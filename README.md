@@ -7,8 +7,10 @@ Live demos for the talk **"Rendering Patterns: What the browser does when nobody
 | # | Demo | What it shows |
 |---|---|---|
 | 01 | [`content-visibility`](./content-visibility/) | 300-product catalog. One CSS property. 7× rendering improvement. |
-| 02 | [bfcache](./bfcache/) | The free optimization most SPAs silently break. |
-| 03 | [View Transitions](./view-transitions/) | Native app transitions. No libraries. SPA + MPA. |
+| 02 | [CSS Containment](./contain/) | Kanban with 100 cards. `contain: layout` scopes reflow to the edited column. INP drops 5×. |
+| 03 | [bfcache](./bfcache/) | The free optimization most SPAs silently break. |
+| 04 | [View Transitions](./view-transitions/) | Native app transitions. No libraries. SPA + MPA. |
+| 05 | [Speculation Rules](./speculation-rules/) | The browser prerenders the next page before you click. LCP ≈ 0ms. |
 
 Each demo has a `/before` and `/after` version. Open DevTools before navigating to see the difference in real metrics.
 
@@ -36,6 +38,8 @@ npx serve .
 
 - [3perf.com — Analyzing Notion app performance](https://3perf.com/blog/notion/) — Ivan Akulov
 - [web.dev — content-visibility](https://web.dev/articles/content-visibility)
+- [web.dev — CSS Containment](https://web.dev/articles/css-containment)
 - [web.dev — bfcache](https://web.dev/articles/bfcache)
 - [Chrome Developers — View Transitions API](https://developer.chrome.com/docs/web-platform/view-transitions)
 - [Speculation Rules API](https://wicg.github.io/nav-speculation)
+- [web.dev — Speculation Rules](https://web.dev/articles/speculation-rules)
