@@ -115,7 +115,7 @@
     script.textContent = `
       import { onLCP, onINP, onCLS } from 'https://unpkg.com/web-vitals@4/dist/web-vitals.attribution.js?module';
       const dispatch = (name, value) => window.dispatchEvent(new CustomEvent('vital', { detail: { name, value } }));
-      onLCP(m => dispatch('LCP', m.value));
+      onLCP(m => dispatch('LCP', m.value), { reportAllChanges: true });
       onINP(m => dispatch('INP', m.value));
       onCLS(m => dispatch('CLS', m.value));
     `;
